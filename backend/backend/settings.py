@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'clothingstoredb',
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': '1917',
         'HOST': '127.0.0.1',
