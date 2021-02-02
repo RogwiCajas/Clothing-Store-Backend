@@ -87,14 +87,20 @@ class Product(models.Model):
     product_descount= models.FloatField()
     product_stock= models.IntegerField()
     product_isOffer= models.BooleanField()
+    product_isHighlighted= models.BooleanField(default=False)
+    product_gender= models.CharField(max_length=1) #m , f
+    product_color= models.CharField(max_length=20)
+    product_size= models.CharField(max_length=5)
+
+
 
     def __str__(self):
         return (self.product_id)   
 
 class ProductOrder(models.Model):
-    producotOrder_id = models.CharField(max_length=10, primary_key=True)
+    productOrder_id = models.CharField(max_length=10, primary_key=True)
     order_id = models.ForeignKey(Order,on_delete=models.CASCADE)
-    productOrder_subototasl= models.FloatField()
+    productOrder_subtotal= models.FloatField()
     productOrder_discount= models.FloatField()
     productOrder_total= models.FloatField()
 
