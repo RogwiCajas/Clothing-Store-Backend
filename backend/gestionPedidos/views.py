@@ -5,6 +5,7 @@ from django.views import View
 from .models import Product
 from .models import Address
 from .models import Customer
+from .models import Category
 from .models import Email
 from .models import Order
 from .models import Phone
@@ -15,7 +16,62 @@ from .models import Test
 #import para manejo de los pk
 from django.forms.models import model_to_dict
 
+from rest_framework import viewsets
+from .serializers import ProductSerilizer
+from .serializers import ProductOrderSerilizer
+from .serializers import PhoneSerilizer
+from .serializers import AddressSerilizer
+from .serializers import CategorySerilizer
+from .serializers import CustomerSerilizer
+from .serializers import EmailSerilizer
+from .serializers import OrderSerilizer
+from .serializers import ShopSerilizer
 
+
+
+
+
+
+#metodos usando el apistest de django
+class ProductViewSet(viewsets.ModelViewSet):
+    serializer_class = ProductSerilizer
+    queryset = Product.objects.all()
+
+class ProductOrderViewSet(viewsets.ModelViewSet):
+    serializer_class = ProductOrderSerilizer
+    queryset = ProductOrder.objects.all()
+
+
+class PhoneViewSet(viewsets.ModelViewSet):
+    serializer_class = PhoneSerilizer
+    queryset = Phone.objects.all()
+
+class AddressViewSet(viewsets.ModelViewSet):
+    serializer_class = AddressSerilizer
+    queryset = Address.objects.all()
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = CategorySerilizer
+    queryset = Category.objects.all()
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    serializer_class = CustomerSerilizer
+    queryset = Customer.objects.all()
+
+class EmailViewSet(viewsets.ModelViewSet):
+    serializer_class = EmailSerilizer
+    queryset = Email.objects.all()
+
+class OrderViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerilizer
+    queryset = Order.objects.all()
+
+class ShopViewSet(viewsets.ModelViewSet):
+    serializer_class = ShopSerilizer
+    queryset = Shop.objects.all()
+
+'''
 #Lista con todos los productos desde la base
 class ProductosListView(View):
     def get(self, request):
@@ -67,12 +123,6 @@ class ShopListView(View):
         Shop = Shop.objects.all()
         return JsonResponse(list(shop.values()), safe=False)
 
-#lista las direcciones 
-class UserListView(View):
-    def get(self, request):
-        user = User.objects.all()
-        return JsonResponse(list(user.values()), safe=False)
-        
 
 #lista con un producto especificado en la url por el pk
 #validar cuando el pk no existe
@@ -125,12 +175,7 @@ class ShopView(View):
     def get(self, request, pk):
         shop = Shop.objects.get(pk=pk)
         return JsonResponse(model_to_dict(shop))
-
-        
-class UserView(View):
-    def get(self, request, pk):
-        user = User.objects.get(pk=pk)
-        return JsonResponse(model_to_dict(user))
+'''
 
 #norelacional
 from mongoengine.queryset.queryset import QuerySet

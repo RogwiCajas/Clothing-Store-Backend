@@ -106,7 +106,7 @@ class ProductOrder(models.Model):
     productOrder_total= models.FloatField()
 
     def __str__(self):
-        return (self.producotOrder_id)  
+        return (self.productOrder_id)  
 
 class Test(Document):
     meta = {'collection' : 'test'}
