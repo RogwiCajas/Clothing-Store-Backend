@@ -9,6 +9,7 @@ from .views import PhoneListView, PhoneView
 from .views import ProductOrderListView, ProductOrderView
 from .views import ShopListView, ShopView
 from .views import UserListView, UserView
+from .views import TestView
 
 
 
@@ -27,5 +28,6 @@ urlpatterns = [
     path('shop/<int:pk>/', ShopView.as_view(), name="shop" ),
     path('user/', UserListView.as_view(), name="user_list"),
     path('user/<int:pk>/', UserView.as_view(), name="user" ),
+    path('test/',TestView.as_view(),name="test" ),
 
 ]

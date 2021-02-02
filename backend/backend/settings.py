@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+from mongoengine import connect
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -85,9 +85,16 @@ DATABASES = {
         'PASSWORD': '1917',
         'HOST': '127.0.0.1',
         'DATABASE_PORT':'5432',
+    },
+    'mongo': {      
+        'ENGINE': 'django.db.backends.dummy',         
     }
 }
 
+MONGO_DATABASE_NAME = 'clothing_store'
+MONGO_HOST = 'localhost'
+MONGO_PORT = 27017
+connect(MONGO_DATABASE_NAME,host=MONGO_HOST, port=MONGO_PORT)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

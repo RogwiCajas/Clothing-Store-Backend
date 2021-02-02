@@ -1,4 +1,5 @@
 from django.db import models
+from mongoengine import DynamicDocument, fields, Document
 
 # Create your models here.
 
@@ -107,3 +108,9 @@ class ProductOrder(models.Model):
     def __str__(self):
         return (self.producotOrder_id)  
 
+class Test(Document):
+    meta = {'collection' : 'test'}
+    nombre = fields.StringField()
+
+    #def __str__(self):
+    #    return (self.nombre) 

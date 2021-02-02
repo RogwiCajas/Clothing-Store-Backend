@@ -11,7 +11,7 @@ from .models import Phone
 from .models import ProductOrder
 from .models import Shop
 from .models import User
-
+from .models import Test
 #import para manejo de los pk
 from django.forms.models import model_to_dict
 
@@ -20,6 +20,7 @@ from django.forms.models import model_to_dict
 class ProductosListView(View):
     def get(self, request):
         productos = Product.objects.all()
+        print(productos)
         return JsonResponse(list(productos.values()), safe=False)
 
 
@@ -131,4 +132,17 @@ class UserView(View):
         user = User.objects.get(pk=pk)
         return JsonResponse(model_to_dict(user))
 
-
+#norelacional
+from mongoengine.queryset.queryset import QuerySet
+import json
+class TestView(View):
+    def get(self, request):
+        test = Test.objects
+        context = {
+            'true' : 'true'
+        }
+        query = test.to_json()
+        dicts = json.loads(query)
+        
+        return JsonResponse(dicts, safe=False)
+        
