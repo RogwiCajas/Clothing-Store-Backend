@@ -193,22 +193,30 @@ class ShopView(View):
 from mongoengine.queryset.queryset import QuerySet
 import json
 class TestView(View):
+    @csrf_exempt
     def get(self, request):
         test = Test.objects
         query = test.to_json()
         dicts = json.loads(query)
         
         return JsonResponse(dicts, safe=False)
-#usuario
+    @csrf_exempt
+    def post(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        id_usuario = body['id_usuario']
+        detalle = body['detalle']
+        test = Test(id_usuario=id_usuario, detalle=detalle)
+        test.save()
+        inserted ={
+            'inserted': True
+        }
+        
+        return JsonResponse(inserted)
 #retorna el usuario con dicho pk
-
 class UserView(View):
     @csrf_exempt
     def post(self, request):
-        #user_id = request.POST["user_id"]
-        #user_password = request.POST["user_password"]
-        #user = User.objects().get(user_password=user_password)
-        #print(user)
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         user = body['user_id']
