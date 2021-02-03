@@ -196,25 +196,55 @@ from mongoengine.queryset.queryset import QuerySet
 import json
 
 class TestView(View):
+    @csrf_exempt
     def get(self, request):
         test = Test.objects
-        context = {
-            'true' : 'true'
-        }
         query = test.to_json()
         dicts = json.loads(query)
         
         return JsonResponse(dicts, safe=False)
-#usuario
-#retorna el usuario con dicho pk
+    @csrf_exempt
+    def post(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        id_usuario = body['id_usuario']
+        detalle = body['detalle']
+        test = Test(id_usuario=id_usuario, detalle=detalle)
+        test.save()
+        inserted ={
+            'inserted': True
+        }
+        
+        return JsonResponse(inserted)
+    @csrf_exempt
+    def update(self, request, id): #no testeada, probablemente no sirva y se caiga xdd
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        id_item= body['id_item']
+        item_cant= body['item_cant']
 
+        test = Test.objects.get(id_usuario=id)
+        test.detalle[carrito][id_item][cantidad]= item_cant
+        test.save()
+        updated ={
+            'updated': True
+        }
+        
+        return JsonResponse(updated)
+    @csrf_exempt
+    def delete(self, request, id): #no testeada, borra por ide user
+        
+        test = Test.objects.get(id_usuario=id)
+        test.delete()
+        deleted ={
+            'deleted': True
+        }
+        
+        return JsonResponse(deleted)
+#retorna el usuario con dicho pk
 class UserView(View):
     @csrf_exempt
     def post(self, request):
-        #user_id = request.POST["user_id"]
-        #user_password = request.POST["user_password"]
-        #user = User.objects().get(user_password=user_password)
-        #print(user)
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         user = body['user_id']
@@ -225,6 +255,7 @@ class UserView(View):
         try:
             log = User.objects.get(user_id=user,user_password=passw)
             respuesta["logeado"]= True
+            
         except User.DoesNotExist:
             respuesta["logeado"] = False
         return JsonResponse(respuesta, safe=False) 

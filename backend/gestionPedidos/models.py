@@ -116,7 +116,6 @@ class ProductOrder(models.Model):
 
 class Test(Document):
     meta = {'collection' : 'test'}
-    nombre = fields.StringField()
-
-    #def __str__(self):
-    #    return (self.nombre) 
+    id_usuario = fields.StringField()
+    detalle = fields.DictField()
+   
