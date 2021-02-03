@@ -77,6 +77,12 @@ class ShopViewSet(viewsets.ModelViewSet):
     serializer_class = ShopSerilizer
     queryset = Shop.objects.all()
 
+
+
+
+
+
+
 '''
 #Lista con todos los productos desde la base
 class ProductosListView(View):

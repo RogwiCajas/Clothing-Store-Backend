@@ -24,6 +24,11 @@ from .views import CategoryViewSet
 from .views import CustomerViewSet
 from .views import OrderViewSet
 from .views import ShopViewSet
+from .views import EmailViewSet
+from .views import PhoneViewSet
+
+
+
 
 
 from rest_framework.routers import DefaultRouter
@@ -37,6 +42,11 @@ router.register(r'productorder', ProductOrderViewSet)
 router.register(r'address', AddressViewSet)
 router.register(r'order', OrderViewSet)
 router.register(r'shop', ShopViewSet)
+router.register(r'email', ShopViewSet)
+router.register(r'phone', PhoneViewSet)
+
+
+
 
 
 
