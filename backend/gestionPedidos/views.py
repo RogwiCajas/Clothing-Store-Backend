@@ -1,6 +1,8 @@
 
 from django.http import JsonResponse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+
 #import de los modelos
 from .models import Product
 from .models import Address
@@ -26,13 +28,17 @@ from .serializers import CustomerSerilizer
 from .serializers import EmailSerilizer
 from .serializers import OrderSerilizer
 from .serializers import ShopSerilizer
-
+from .serializers import UserSerilizer
 
 
 
 
 
 #metodos usando el apistest de django
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerilizer
+    queryset = User.objects.all()
+
 class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerilizer
     queryset = Product.objects.all()
@@ -190,4 +196,26 @@ class TestView(View):
         dicts = json.loads(query)
         
         return JsonResponse(dicts, safe=False)
-        
+#usuario
+#retorna el usuario con dicho pk
+
+class UserView(View):
+    @csrf_exempt
+    def post(self, request):
+        #user_id = request.POST["user_id"]
+        #user_password = request.POST["user_password"]
+        #user = User.objects().get(user_password=user_password)
+        #print(user)
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        user = body['user_id']
+        passw = body['user_password'] 
+        respuesta ={
+            "logeado": False
+        }
+        try:
+            log = User.objects.get(user_id=user,user_password=passw)
+            respuesta["logeado"]= True
+        except User.DoesNotExist:
+            respuesta["logeado"] = False
+        return JsonResponse(respuesta, safe=False)     
