@@ -219,6 +219,7 @@ class UserView(View):
         try:
             log = User.objects.get(user_id=user,user_password=passw)
             respuesta["logeado"]= True
+            
         except User.DoesNotExist:
             respuesta["logeado"] = False
         return JsonResponse(respuesta, safe=False)     
