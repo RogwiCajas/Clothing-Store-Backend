@@ -189,9 +189,6 @@ import json
 class TestView(View):
     def get(self, request):
         test = Test.objects
-        context = {
-            'true' : 'true'
-        }
         query = test.to_json()
         dicts = json.loads(query)
         
