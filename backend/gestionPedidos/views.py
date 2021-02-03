@@ -30,6 +30,8 @@ from .serializers import OrderSerilizer
 from .serializers import ShopSerilizer
 from .serializers import UserSerilizer
 
+from django.db.models import Sum
+
 
 
 
@@ -192,6 +194,7 @@ class ShopView(View):
 #norelacional
 from mongoengine.queryset.queryset import QuerySet
 import json
+
 class TestView(View):
     def get(self, request):
         test = Test.objects
@@ -224,4 +227,160 @@ class UserView(View):
             respuesta["logeado"]= True
         except User.DoesNotExist:
             respuesta["logeado"] = False
-        return JsonResponse(respuesta, safe=False)     
+        return JsonResponse(respuesta, safe=False) 
+
+class ActualizarPassword(View):
+    @csrf_exempt
+    def post(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        user = body['user_id']
+        passwOld = body['user_password1'] 
+        passwNew = body['user_password2'] 
+
+
+        respuesta ={
+            "Validacion": False
+
+        }
+        try:
+            User.objects.get(user_id=user,user_password=passwOld)
+            respuesta["Validacion"]= True
+            User.objects.update(user_id=user,user_password=passwNew)
+        except User.DoesNotExist:
+            respuesta["Validacion"] = False
+        return JsonResponse(respuesta, safe=False)
+
+class TotalUser(View):
+    @csrf_exempt
+    def get(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        respuesta ={
+            "Total": 0
+
+        }
+        try:
+            contador = User.objects.all().count()
+            respuesta["Total"]= contador
+        except User.DoesNotExist:
+            respuesta["Total"] = 0
+        return JsonResponse(respuesta, safe=False)
+
+class totalGanacia(View):
+    @csrf_exempt
+    def get(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        respuesta ={
+            "Total": 0
+
+        }
+        try:
+            amount = Order.objects.all().aggregate(Sum('order_amount'))
+            discount = Order.objects.all().aggregate(Sum('order_descount'))
+            respuesta["Total"]= amount['order_amount__sum'] -  discount['order_descount__sum']
+            #respuesta["Total"]= amount
+        except Order.DoesNotExist:
+            respuesta["Total"] = 0
+        return JsonResponse(respuesta, safe=False)
+
+class OrdenesPorFecha(View):
+    @csrf_exempt
+    def get(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        respuesta ={
+
+        }
+        try:
+            fecha = Order.objects.filter(date__year>'2021', 
+                      date__month= "01")
+            respuesta=fecha
+        except Order.DoesNotExist:
+            respuesta["Respuesta"] = 0
+        return JsonResponse(respuesta, safe=False)
+
+
+class totalGanaciaEstimada(View):
+    @csrf_exempt
+    def get(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        respuesta ={
+            "Total": 0
+
+        }
+        try:
+            amount = Order.objects.all().aggregate(Sum('order_amount'))
+            discount = Order.objects.all().aggregate(Sum('order_descount'))
+            respuesta["Total"]= amount['order_amount__sum'] -  discount['order_descount__sum']
+            #respuesta["Total"]= amount
+        except User.DoesNotExist:
+            respuesta["Validacion"] = 0
+        return JsonResponse(respuesta, safe=False)
+
+
+class CrearCuenta(View):
+    @csrf_exempt
+    def post(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        user = body['user_id']
+        passw = body['user_password']
+        isAdmin = body['user_is_admin']
+        nombre = body['customer_firstname'] 
+        apellido = body['customer_lastname'] 
+        pais = body['customer_country'] 
+        ciudad = body['customer_city'] 
+        direccion = body['customer_address'] 
+        cedula = body['customer_id'] 
+ 
+ 
+
+        respuesta ={
+            "Creacion": False
+        }
+        try:
+            User.objects.get(user_id=user)
+            respuesta["Creacion"]= False
+        except User.DoesNotExist:
+            respuesta["Creacion"] = True
+            usuario = User.objects.create(user_id=user,user_password=passw,user_is_admin=isAdmin)
+            usuario.save()
+            Customer.objects.create(user_id=user, customer_id=cedula, customer_FirstName=nombre, customer_LastName=apellido, customer_country= pais, customer_city=ciudad, customer_address=direccion)
+        return JsonResponse(respuesta, safe=False)
+
+class DatosUser(View):
+    @csrf_exempt
+    def get(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        user = body['user_id']
+        
+
+        respuesta ={
+            "Creacion": False,
+            "Customer_id"
+            "Nombre": "",
+            "Apellido": "",
+            "Correo": "",
+            "Telefono": "",
+            "Pais": "",
+            "Ciudad": ""
+        }
+        try:
+            cliente = Custumer.objects.get(user_id=user)
+            respuesta["Customer_id"]= cliente.get(cliente)
+            respuesta["Creacion"]= True
+        except User.DoesNotExist:
+            respuesta["Creacion"] = False
+
+        return JsonResponse(respuesta, safe=False)

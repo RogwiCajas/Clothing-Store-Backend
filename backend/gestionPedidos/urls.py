@@ -14,6 +14,13 @@ from .views import UserListView, UserView
 '''
 from .views import UserView
 from .views import TestView
+from .views import ActualizarPassword
+from .views import CrearCuenta
+from .views import TotalUser
+from .views import totalGanacia
+from .views import OrdenesPorFecha
+
+
 
 #llamo a las view de las api 
 from .views import UserViewSet
@@ -56,5 +63,12 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path('test/',TestView.as_view(),name="test" ),
-    path('login/',csrf_exempt(UserView.as_view()),name="login" ),   
+    path('login/',csrf_exempt(UserView.as_view()),name="login" ), 
+    path('createuser/',csrf_exempt(CrearCuenta.as_view()),name="changePass" ),  
+    path('changePass/',csrf_exempt(ActualizarPassword.as_view()),name="changePass" ),  
+    path('totaluser/',csrf_exempt(TotalUser.as_view()),name="changePass" ),  
+    path('totalganancia/',csrf_exempt(totalGanacia.as_view()),name="changePass" ),  
+    path('ordenfecha/',csrf_exempt(OrdenesPorFecha.as_view()),name="changePass" ),  
 ]
+
+

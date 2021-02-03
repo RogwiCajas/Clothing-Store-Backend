@@ -1,4 +1,6 @@
 from django.db import models
+import datetime
+from django.utils import timezone
 from mongoengine import DynamicDocument, fields, Document
 
 # Create your models here.
@@ -29,7 +31,9 @@ class Customer(models.Model):
     customer_id = models.CharField(max_length=10, primary_key=True)
     customer_FirstName= models.CharField(max_length=40)
     customer_LastName= models.CharField(max_length=40)
-    customer_address= models.ForeignKey(Address,on_delete=models.CASCADE)
+    customer_country= models.CharField(max_length=40, default="")
+    customer_city= models.CharField(max_length=40,default="")
+    customer_address= models.CharField(max_length=40,default="")
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -85,6 +89,7 @@ class Product(models.Model):
     category_id = models.ForeignKey(Category,on_delete=models.CASCADE)
     product_name= models.CharField(max_length=20)
     product_description= models.CharField(max_length=20)
+    product_fecha = models.DateTimeField(default=timezone.now)
     product_price= models.FloatField()
     product_descount= models.FloatField()
     product_stock= models.IntegerField()
