@@ -213,6 +213,31 @@ class TestView(View):
         }
         
         return JsonResponse(inserted)
+    @csrf_exempt
+    def update(self, request, id): #no testeada, probablemente no sirva y se caiga xdd
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        id_item= body['id_item']
+        item_cant= body['item_cant']
+
+        test = Test.objects.get(id_usuario=id)
+        test.detalle[carrito][id_item][cantidad]= item_cant
+        test.save()
+        updated ={
+            'updated': True
+        }
+        
+        return JsonResponse(updated)
+    @csrf_exempt
+    def delete(self, request, id): #no testeada, borra por ide user
+        
+        test = Test.objects.get(id_usuario=id)
+        test.delete()
+        deleted ={
+            'deleted': True
+        }
+        
+        return JsonResponse(deleted)
 #retorna el usuario con dicho pk
 class UserView(View):
     @csrf_exempt

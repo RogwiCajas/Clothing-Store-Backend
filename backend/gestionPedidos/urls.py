@@ -56,5 +56,6 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path('test/',csrf_exempt(TestView.as_view()),name="test" ),
-    path('login/',csrf_exempt(UserView.as_view()),name="login" ),   
+    path('login/',csrf_exempt(UserView.as_view()),name="login" ),
+    path('test_delete/<str:id>',csrf_exempt(TestView.as_view()), name="test" ),   
 ]
