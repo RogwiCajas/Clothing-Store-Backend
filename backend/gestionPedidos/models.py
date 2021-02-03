@@ -6,6 +6,7 @@ from mongoengine import DynamicDocument, fields, Document
 class User(models.Model):
     user_id = models.CharField(max_length=10, primary_key=True)
     user_password= models.CharField(max_length=20)
+    user_is_admin= models.BooleanField()
 
     def __str__(self):
         return (self.user_id) 
@@ -18,7 +19,7 @@ class Address(models.Model):
     address_zone= models.CharField(max_length=30)
     address_neighnorhood= models.CharField(max_length=30)   
     address_street= models.CharField(max_length=50)   
-    address_buildingNo= models.IntegerField()   
+    address_buildingNo= models.IntegerField(default=False)   
 
     def __str__(self):
         return self.address_id
