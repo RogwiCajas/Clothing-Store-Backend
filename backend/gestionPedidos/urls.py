@@ -17,8 +17,8 @@ from .views import TestView
 from .views import ActualizarPassword
 from .views import CrearCuenta
 from .views import TotalUser
-from .views import totalGanacia
-from .views import OrdenesPorFecha
+from .views import totalGanaciaEstimada
+from .views import totalGanaciaReal
 
 
 
@@ -62,20 +62,13 @@ router.register(r'phone', PhoneViewSet)
 urlpatterns = router.urls
 
 urlpatterns += [
-<<<<<<< HEAD
     path('test/',TestView.as_view(),name="test" ),
     path('login/',csrf_exempt(UserView.as_view()),name="login" ), 
-    path('createuser/',csrf_exempt(CrearCuenta.as_view()),name="changePass" ),  
-    path('changePass/',csrf_exempt(ActualizarPassword.as_view()),name="changePass" ),  
-    path('totaluser/',csrf_exempt(TotalUser.as_view()),name="changePass" ),  
-    path('totalganancia/',csrf_exempt(totalGanacia.as_view()),name="changePass" ),  
-    path('ordenfecha/',csrf_exempt(OrdenesPorFecha.as_view()),name="changePass" ),  
-]
-
-
-=======
-    path('test/',csrf_exempt(TestView.as_view()),name="test" ),
-    path('login/',csrf_exempt(UserView.as_view()),name="login" ),
     path('test_delete/<str:id>',csrf_exempt(TestView.as_view()), name="test" ),   
+    path('createuser/',csrf_exempt(CrearCuenta.as_view()),name="changePass" ),  
+    path('changepass/',csrf_exempt(ActualizarPassword.as_view()),name="changePass" ),  
+    path('totaluser/',csrf_exempt(TotalUser.as_view()),name="changePass" ),  
+    path('ganancialestimada/',csrf_exempt(totalGanaciaEstimada.as_view()),name="changePass" ), 
+    path('gananciareal/',csrf_exempt(totalGanaciaReal.as_view()),name="changePass" ),  
 ]
->>>>>>> 53dd3a1bf42fd3e9fa02bf102b92dbf4fc8a5bd4
+

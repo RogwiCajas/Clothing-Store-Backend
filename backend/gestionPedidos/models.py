@@ -34,6 +34,9 @@ class Customer(models.Model):
     customer_country= models.CharField(max_length=40, default="")
     customer_city= models.CharField(max_length=40,default="")
     customer_address= models.CharField(max_length=40,default="")
+    customer_phone= models.CharField(max_length=40,default="")
+    customer_email= models.CharField(max_length=40,default="")
+
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -49,7 +52,6 @@ class Email(models.Model):
 class Phone(models.Model):
     phone = models.CharField(max_length=10, primary_key=True)
     customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
-    phone_provider= models.CharField(max_length=20)
 
     def __str__(self):
         return (self.phone) 
@@ -74,7 +76,12 @@ class Order(models.Model):
     order_descount= models.FloatField()
 
     def __str__(self):
-        return (self.order_id)   
+        return (self.order_id)  
+    
+    class Meta:
+        ordering = ["-order_date"]
+  
+     
 
 class Category(models.Model):
     category_id = models.CharField(max_length=10, primary_key=True)
@@ -87,8 +94,8 @@ class Category(models.Model):
 class Product(models.Model):
     product_id = models.CharField(max_length=10, primary_key=True)
     category_id = models.ForeignKey(Category,on_delete=models.CASCADE)
-    product_name= models.CharField(max_length=20)
-    product_description= models.CharField(max_length=20)
+    product_name= models.CharField(max_length=40)
+    product_description= models.CharField(max_length=40)
     product_fecha = models.DateTimeField(default=timezone.now)
     product_price= models.FloatField()
     product_descount= models.FloatField()
@@ -103,6 +110,9 @@ class Product(models.Model):
 
     def __str__(self):
         return (self.product_id)   
+    
+    class Meta:
+        ordering = ["-product_fecha"]
 
 class ProductOrder(models.Model):
     productOrder_id = models.CharField(max_length=10, primary_key=True)
