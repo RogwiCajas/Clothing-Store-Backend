@@ -2,7 +2,8 @@
 from django.http import JsonResponse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-
+from django.conf import settings
+from django.core.mail import send_mail
 #import de los modelos
 from .models import Product
 from .models import Address
@@ -407,3 +408,32 @@ class DatosUsuario(View):
         except User.DoesNotExist:
             respuesta["Validacion"] = "No existe la cuenta"
         return JsonResponse(respuesta, safe=False)
+
+
+class EnvioMail(View):
+    @csrf_exempt
+    def post(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        nombre = body['nombre']
+        apellido = body['apellido']
+        fechaNacimiento = body['fechaNacimiento']
+        email = body['email']
+        genero = body['genero']
+        lugar = body['lugar']
+        detalle = body['detalle']
+
+        subject = "Formulario de Contacto"
+        message = "Hola " + nombre + " " + apellido + "hemos recibido su informacion, gracias por contactarnos"
+        email_from= settings.EMAIL_HOST_USER
+        recipient = ["isavisch97@gmail.com", email]
+
+        send_mail(subject, message, email_from, recipient)
+
+        respuesta ={
+                "Envio": True          
+
+        }
+        return JsonResponse(respuesta, safe=False)
+

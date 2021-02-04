@@ -20,6 +20,7 @@ from .views import TotalUser
 from .views import totalGanaciaEstimada
 from .views import totalGanaciaReal
 from .views import DatosUsuario
+from .views import EnvioMail
 
 
 
@@ -72,5 +73,7 @@ urlpatterns += [
     path('ganancialestimada/',csrf_exempt(totalGanaciaEstimada.as_view()),name="ganancialestimada" ), 
     path('gananciareal/',csrf_exempt(totalGanaciaReal.as_view()),name="gananciareal" ),  
     path('datosuser/',csrf_exempt(DatosUsuario.as_view()),name="datosuser" ),  
+    path('sendemail/',csrf_exempt(EnvioMail.as_view()),name="sendemail" ),  
+
 
 ]
