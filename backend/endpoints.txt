@@ -1,0 +1,70 @@
+cambiar de clave
+http://127.0.0.1:8000/api/changePass/
+POST
+{
+    "user_id" : "1", 
+    "user_password1" : "abcd1234",
+    "user_password2" : "nuevaclave"
+
+}
+
+crear usuario
+http://127.0.0.1:8000/api/createuser/    
+POST
+{
+    "user_id" : "1231231231", 
+    "user_password" : "clave",
+    "user_is_admin" :  "False",
+    "customer_firstname" :  "Wladimir",
+    "customer_lastname" :  "Aguilar",
+    "customer_country" :  "Ecuador",
+    "customer_city" :  "Duran",
+    "customer_address" :  "Recrep",
+    "customer_id" :  "23213213",
+    "customer_phone" :  "0999456778",
+    "customer_email" :  "isolis@espol.edu.ec"
+ }
+
+obtener datos usuario por id
+http://127.0.0.1:8000/api/datosuser/
+POST
+{
+    "user_id" : "1"
+}
+
+obtener total de usuarios 
+http://127.0.0.1:8000/api/totaluser/
+GET
+
+OBTENER GANACIA ESTIMADA (total de valor de ordenes)
+http://127.0.0.1:8000/api/ganancialestimada/
+GET
+
+
+
+OBTENER GANACIA REAL (TOTAL DE VALOR EN ORDENES - DESCUENTO)
+http://127.0.0.1:8000/api/gananciareal/
+GET
+
+
+ultimas ORDENES de los ultimos dias (devuelve rodas las ordenes descendentes )
+http://127.0.0.1:8000/api/oder/
+GET 
+
+os 5 ultimo productos que se han agregado (devuelve rodas los productos descendentes )
+http://127.0.0.1:8000/api/product/
+GET
+
+
+
+todos los modelos tiene su api get list, get por pk, post, delete y put
+
+
+
+
+
+
+
+
+
+

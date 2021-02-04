@@ -19,6 +19,7 @@ from .views import CrearCuenta
 from .views import TotalUser
 from .views import totalGanaciaEstimada
 from .views import totalGanaciaReal
+from .views import DatosUsuario
 
 
 
@@ -65,9 +66,11 @@ urlpatterns += [
     path('test/',csrf_exempt(TestView.as_view()),name="test" ),
     path('login/',csrf_exempt(UserView.as_view()),name="login" ),
     path('test_delete/<str:id>',csrf_exempt(TestView.as_view()), name="test" ), 
-    path('createuser/',csrf_exempt(CrearCuenta.as_view()),name="changePass" ),  
-    path('changepass/',csrf_exempt(ActualizarPassword.as_view()),name="changePass" ),  
-    path('totaluser/',csrf_exempt(TotalUser.as_view()),name="changePass" ),  
-    path('ganancialestimada/',csrf_exempt(totalGanaciaEstimada.as_view()),name="changePass" ), 
-    path('gananciareal/',csrf_exempt(totalGanaciaReal.as_view()),name="changePass" ),  
+    path('createuser/',csrf_exempt(CrearCuenta.as_view()),name="createuser" ),  
+    path('changepass/',csrf_exempt(ActualizarPassword.as_view()),name="changepass" ),  
+    path('totaluser/',csrf_exempt(TotalUser.as_view()),name="totaluser" ),  
+    path('ganancialestimada/',csrf_exempt(totalGanaciaEstimada.as_view()),name="ganancialestimada" ), 
+    path('gananciareal/',csrf_exempt(totalGanaciaReal.as_view()),name="gananciareal" ),  
+    path('datosuser/',csrf_exempt(DatosUsuario.as_view()),name="datosuser" ),  
+
 ]

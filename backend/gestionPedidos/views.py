@@ -358,9 +358,6 @@ class CrearCuenta(View):
         telefono = body['customer_phone'] 
         email = body['customer_email'] 
  
- 
- 
-
         respuesta ={
             "Creacion": False
         }
@@ -375,3 +372,38 @@ class CrearCuenta(View):
             cliente = Customer.objects.create(user_id=newUser,customer_id=cedula, customer_FirstName=nombre, customer_LastName=apellido, customer_country= pais, customer_city=ciudad, customer_address=direccion, customer_phone= telefono, customer_email=email)
         return JsonResponse(respuesta, safe=False)
 
+class DatosUsuario(View):
+    @csrf_exempt
+    def post(self, request):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+
+        user = body['user_id']
+
+
+        respuesta ={
+            "customer_id" :  "",
+            "customer_firstname" :  "",
+            "customer_lastname" :  "",
+            "customer_country" :  "",
+            "customer_city" :  "",
+            "customer_address" :  "",
+            "customer_phone" :  "",
+            "customer_email" :  ""
+
+        }
+        try:
+            User.objects.get(user_id=user)
+            cliente = Customer.objects.get(user_id=user)
+            respuesta["customer_id"]= cliente.customer_id
+            respuesta["customer_firstname"]= cliente.customer_FirstName
+            respuesta["customer_lastname"]= cliente.customer_LastName
+            respuesta["customer_country"]= cliente.customer_country
+            respuesta["customer_city"]= cliente.customer_city
+            respuesta["customer_address"]= cliente.customer_address
+            respuesta["customer_phone"]= cliente.customer_phone
+            respuesta["customer_email"]= cliente.customer_email
+
+        except User.DoesNotExist:
+            respuesta["Validacion"] = "No existe la cuenta"
+        return JsonResponse(respuesta, safe=False)
