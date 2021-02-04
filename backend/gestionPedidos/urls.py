@@ -62,13 +62,12 @@ router.register(r'phone', PhoneViewSet)
 urlpatterns = router.urls
 
 urlpatterns += [
-    path('test/',TestView.as_view(),name="test" ),
-    path('login/',csrf_exempt(UserView.as_view()),name="login" ), 
-    path('test_delete/<str:id>',csrf_exempt(TestView.as_view()), name="test" ),   
+    path('test/',csrf_exempt(TestView.as_view()),name="test" ),
+    path('login/',csrf_exempt(UserView.as_view()),name="login" ),
+    path('test_delete/<str:id>',csrf_exempt(TestView.as_view()), name="test" ), 
     path('createuser/',csrf_exempt(CrearCuenta.as_view()),name="changePass" ),  
     path('changepass/',csrf_exempt(ActualizarPassword.as_view()),name="changePass" ),  
     path('totaluser/',csrf_exempt(TotalUser.as_view()),name="changePass" ),  
     path('ganancialestimada/',csrf_exempt(totalGanaciaEstimada.as_view()),name="changePass" ), 
     path('gananciareal/',csrf_exempt(totalGanaciaReal.as_view()),name="changePass" ),  
 ]
-
