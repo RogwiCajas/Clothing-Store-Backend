@@ -8,7 +8,11 @@ rest_framework
 psycopg2
 
 
-#para correr el proyecto
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+Para correr el proyecto:
+python manage.py makemigrations ,
+python manage.py migrate ,
+python manage.py runserver ,
+
+
+Para usar el admin de la base :
+python manage.py createsuperuser  , ir a /admin/
