@@ -14,7 +14,7 @@ class User(models.Model):
         return (self.user_id) 
 
 class Address(models.Model):
-    address_id = models.CharField(max_length=10, primary_key=True)
+    address_id = models.AutoField(primary_key=True)
     address_country= models.CharField(max_length=20)
     address_province= models.CharField(max_length=20)
     address_city= models.CharField(max_length=30)   
@@ -28,7 +28,7 @@ class Address(models.Model):
  
 
 class Customer(models.Model):
-    customer_id = models.CharField(max_length=10, primary_key=True)
+    customer_id = models.AutoField(primary_key=True)
     customer_FirstName= models.CharField(max_length=40)
     customer_LastName= models.CharField(max_length=40)
     customer_country= models.CharField(max_length=40, default="")
@@ -58,7 +58,7 @@ class Phone(models.Model):
 
 
 class Shop(models.Model):
-    shop_id = models.CharField(max_length=10, primary_key=True)
+    shop_id = models.AutoField(primary_key=True)
     address_id = models.ForeignKey(Address,on_delete=models.CASCADE)
     shop_name= models.CharField(max_length=60)
     shop_description= models.CharField(max_length=200)
@@ -67,7 +67,7 @@ class Shop(models.Model):
         return (self.shop_id)  
 
 class Order(models.Model):
-    order_id = models.CharField(max_length=10, primary_key=True)
+    order_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
     address_id = models.ForeignKey(Address,on_delete=models.CASCADE)
     shop_id = models.ForeignKey(Shop,on_delete=models.CASCADE)
@@ -84,7 +84,7 @@ class Order(models.Model):
      
 
 class Category(models.Model):
-    category_id = models.CharField(max_length=10, primary_key=True)
+    category_id = models.AutoField(primary_key=True)
     category_name= models.CharField(max_length=40)
     category_description= models.CharField(max_length=200)
 
@@ -92,13 +92,14 @@ class Category(models.Model):
         return (self.category_id)   
     
 class Product(models.Model):
-    product_id = models.CharField(max_length=10, primary_key=True)
+    product_id = models.AutoField(primary_key=True)
     category_id = models.ForeignKey(Category,on_delete=models.CASCADE)
     product_name= models.CharField(max_length=40)
     product_description= models.CharField(max_length=40)
     product_fecha = models.DateTimeField(default=timezone.now)
     product_price= models.FloatField()
     product_descount= models.FloatField()
+    product_image = models.FileField(default="")
     product_stock= models.IntegerField()
     product_isOffer= models.BooleanField()
     product_isHighlighted= models.BooleanField(default=False)
@@ -115,7 +116,7 @@ class Product(models.Model):
         ordering = ["-product_fecha"]
 
 class ProductOrder(models.Model):
-    productOrder_id = models.CharField(max_length=10, primary_key=True)
+    productOrder_id = models.AutoField(primary_key=True)
     order_id = models.ForeignKey(Order,on_delete=models.CASCADE)
     productOrder_subtotal= models.FloatField()
     productOrder_discount= models.FloatField()

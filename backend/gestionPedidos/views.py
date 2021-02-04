@@ -250,16 +250,19 @@ class UserView(View):
         body = json.loads(body_unicode)
         user = body['user_id']
         passw = body['user_password'] 
+
         respuesta ={
-            "logeado": False
+            "logeado": False,
+            "admin":False
         }
         try:
             log = User.objects.get(user_id=user,user_password=passw)
             respuesta["logeado"]= True
+            respuesta["admin"]= log.user_is_admin
             
         except User.DoesNotExist:
             respuesta["logeado"] = False
-        return JsonResponse(respuesta, safe=False) 
+        return JsonResponse(respuesta, safe=False)
 
 class ActualizarPassword(View):
     @csrf_exempt
