@@ -98,7 +98,6 @@ class Product(models.Model):
     product_description= models.CharField(max_length=40)
     product_fecha = models.DateTimeField(default=timezone.now)
     product_price= models.FloatField()
-    product_image = models.FileField(default="")
     product_descount= models.FloatField()
     product_stock= models.IntegerField()
     product_isOffer= models.BooleanField()

@@ -2,8 +2,7 @@
 from django.http import JsonResponse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
-from django.core.mail import send_mail
+
 #import de los modelos
 from .models import Product
 from .models import Address
@@ -250,7 +249,6 @@ class UserView(View):
         body = json.loads(body_unicode)
         user = body['user_id']
         passw = body['user_password'] 
-
         respuesta ={
             "logeado": False,
             "admin":False
@@ -258,11 +256,10 @@ class UserView(View):
         try:
             log = User.objects.get(user_id=user,user_password=passw)
             respuesta["logeado"]= True
-            respuesta["admin"]= log.user_is_admin
-            
+            respuesta["admin"] = log.user_is_admin
         except User.DoesNotExist:
             respuesta["logeado"] = False
-        return JsonResponse(respuesta, safe=False)
+        return JsonResponse(respuesta, safe=False) 
 
 class ActualizarPassword(View):
     @csrf_exempt
@@ -291,9 +288,6 @@ class ActualizarPassword(View):
 class TotalUser(View):
     @csrf_exempt
     def get(self, request):
-        body_unicode = request.body.decode('utf-8')
-        body = json.loads(body_unicode)
-
         respuesta ={
             "Total": 0
 
@@ -308,9 +302,7 @@ class TotalUser(View):
 class totalGanaciaEstimada(View):
     @csrf_exempt
     def get(self, request):
-        body_unicode = request.body.decode('utf-8')
-        body = json.loads(body_unicode)
-
+        
         respuesta ={
             "TotalEstimada": 0
 
@@ -326,8 +318,7 @@ class totalGanaciaEstimada(View):
 class totalGanaciaReal(View):
     @csrf_exempt
     def get(self, request):
-        body_unicode = request.body.decode('utf-8')
-        body = json.loads(body_unicode)
+        
 
         respuesta ={
             "TotalReal": 0
@@ -411,32 +402,3 @@ class DatosUsuario(View):
         except User.DoesNotExist:
             respuesta["Validacion"] = "No existe la cuenta"
         return JsonResponse(respuesta, safe=False)
-
-
-class EnvioMail(View):
-    @csrf_exempt
-    def post(self, request):
-        body_unicode = request.body.decode('utf-8')
-        body = json.loads(body_unicode)
-
-        nombre = body['nombre']
-        apellido = body['apellido']
-        fechaNacimiento = body['fechaNacimiento']
-        email = body['email']
-        genero = body['genero']
-        lugar = body['lugar']
-        detalle = body['detalle']
-
-        subject = "Formulario de Contacto"
-        message = "Hola " + nombre + " " + apellido + "hemos recibido su informacion, gracias por contactarnos"
-        email_from= settings.EMAIL_HOST_USER
-        recipient = ["isavisch97@gmail.com", email]
-
-        send_mail(subject, message, email_from, recipient)
-
-        respuesta ={
-                "Envio": True          
-
-        }
-        return JsonResponse(respuesta, safe=False)
-

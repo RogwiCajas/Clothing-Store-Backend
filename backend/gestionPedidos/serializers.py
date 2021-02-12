@@ -10,10 +10,7 @@ from .models import Email
 from .models import Shop
 from .models import Order
 from .models import User
-
-
-
-
+#cambios
 
 class UserSerilizer(serializers.ModelSerializer):
     class Meta:

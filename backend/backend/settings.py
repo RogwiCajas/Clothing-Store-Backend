@@ -109,7 +109,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '1917',
+        'PASSWORD': 'A124356*/{',
         'HOST': '127.0.0.1',
         'DATABASE_PORT':'5432',
     },
@@ -166,9 +166,15 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER= "isavisch97@gmail.com"
-EMAIL_HOST_PASSWORD = "Xavixavi12"
 
-
-
-
+'''
+from django.core.mail import send_mail
+send_mail(
+    'Subject here',
+    'Here is the message.',
+    'isavisch97@gmail.com',
+    ['isavisch97@gmail.com'],
+    fail_silently=False,
+)
+'''
 
